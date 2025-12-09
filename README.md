@@ -66,20 +66,9 @@ Evaluate performance using the AVA-Speech dataset with the Sliding-Window Infere
 python evaluation/evaluate_atomicvad.py --dataset ./data/AVA_Speech --method swi
 ```
 
-### 3️⃣ Quantization for Microcontrollers
+### 3️⃣ Quantization for Microcontrollers and Deployment to Arduino Nano 33 BLE Sense
 
-Convert and quantize the trained model to INT8 for deployment:
-
-```bash
-python deployment/quantize_model.py --model ./models/atomicvad_fp32.tflite
-```
-
-### 4️⃣ Deployment to Arduino Nano 33 BLE Sense
-
-Flash the quantized model and test inference latency:
-
-```bash
-python deployment/deploy_arduino.py --port /dev/ttyUSB0
+Convert and quantize the trained model to INT8 for deployment using [EdgeImpulse]([url](https://edgeimpulse.com/)) tool.
 ```
 
 ---
@@ -116,11 +105,18 @@ AtomicVAD was successfully deployed in a **LoRaWAN IoT network**, demonstrating 
 If you use this repository, please cite:
 
 ```bibtex
-@article{soto2025atomicvad,
-  title={AtomicVAD: A Tiny Voice Activity Detection Model for Efficient Inference in Intelligent IoT Systems},
-  author={Soto-Vergel, Angelo J. and others},
-  journal={Internet of Things},
-  year={2025}
+@article{SotoVergel2026,
+  title = {AtomicVAD: A tiny voice activity detection model for efficient inference in intelligent IoT systems},
+  volume = {35},
+  ISSN = {2542-6605},
+  url = {http://dx.doi.org/10.1016/j.iot.2025.101822},
+  DOI = {10.1016/j.iot.2025.101822},
+  journal = {Internet of Things},
+  publisher = {Elsevier BV},
+  author = {Soto-Vergel,  Angelo J. and Sankaran,  Prashant and Velez,  Juan C. and Amaya-Mier,  Rene and Ramirez-Rios,  Diana},
+  year = {2026},
+  month = jan,
+  pages = {101822}
 }
 ```
 
