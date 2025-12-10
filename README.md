@@ -53,15 +53,17 @@ pip install -r requirements.txt
 Train AtomicVAD using the Speech Commands + FreeSound (SCF) dataset:
 
 ```bash
-python training/train_atomicvad.py --dataset ./data/SCF --epochs 100
+python AtomicVAD/training/train.py
 ```
+
+For more information go to training folder.
 
 ### 2️⃣ Evaluation
 
-Evaluate performance using the AVA-Speech dataset with the Sliding-Window Inference (SWI) method:
+Evaluate performance using the AVA-Speech dataset with the Sliding-Window Inference (SWI) or Simple-Pass Inference method:
 
 ```bash
-python evaluation/evaluate_atomicvad.py --dataset ./data/AVA_Speech --method swi
+
 ```
 
 ### 3️⃣ Quantization for Microcontrollers and Deployment to Arduino Nano 33 BLE Sense
