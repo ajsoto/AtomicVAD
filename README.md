@@ -24,10 +24,8 @@ This repository provides the code, pre-trained models, and scripts used in the p
 AtomicVAD/
 │
 ├── models/                # Trained model files
-├── src/                   # Core model definition (GGCU, OscilloCore, AtomicVAD)
-├── training/              # Training and hyperparameter optimization scripts (BOHB)
+├── training/              # Training scripts
 ├── evaluation/            # SWI & SPI evaluation protocols for AVA-Speech
-├── data/                  # Data preprocessing and MFCC extraction scripts
 ├── notebooks/             # Jupyter notebooks for experimentation and visualization
 ├── requirements.txt       # Python dependencies
 ├── LICENSE
