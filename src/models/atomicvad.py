@@ -1,12 +1,25 @@
 """
 AtomicVAD model architecture definition.
 """
+import os
+import sys
 
 import tensorflow as tf
 from typing import Tuple
 
-from models.layers import GGCU, Spectrogram, SpecCutout
-from models.spec_augment import SpecAugment
+from layers import GGCU, Spectrogram, SpecCutout
+from spec_augment import SpecAugment
+
+# 1. Determine the absolute path to the directory
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+
+# 2. Go UP two levels and then DOWN into the folder
+target_dir_training = os.path.join(current_file_dir, '..', '..', 'training')
+
+# 3. Add this target directory to Python's search path
+sys.path.append(target_dir_training)
+
+# 4. Now you can import as if it were in the same folder
 from config import TrainingConfig
 
 

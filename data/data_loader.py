@@ -7,7 +7,7 @@ import numpy as np
 import tensorflow as tf
 from typing import List, Dict, Tuple, Optional
 
-from data.augmentation import shift_perturb, white_noise_perturb
+from augmentation import shift_perturb, white_noise_perturb
 
 
 def get_files(manifest_path: str) -> List[Dict]:

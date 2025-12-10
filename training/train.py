@@ -2,7 +2,7 @@
 AtomicVAD Training Script
 Main training loop for the AtomicVAD model with GGCU activation.
 """
-
+import sys
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -11,10 +11,23 @@ import numpy as np
 from tensorflow.keras import mixed_precision
 
 from config import TrainingConfig
-from data.data_loader import load_manifest, create_dataset
-from models.atomicvad import build_atomicvad_model
 from utils.seed import set_seed
 from utils.gpu import configure_gpu
+
+# 1. Determine the absolute path to the directory
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+
+# 2. Go UP one level and then DOWN into the folder
+target_dir_data = os.path.join(current_file_dir, '..', 'data')
+target_dir_models = os.path.join(current_file_dir, '..', 'src/models')
+
+# 3. Add this target directory to Python's search path
+sys.path.append(target_dir_data)
+sys.path.append(target_dir_models)
+
+# 4. Now you can import as if it were in the same folder
+from data_loader import load_manifest, create_dataset
+from atomicvad import build_atomicvad_model
 
 
 def train_model(config: TrainingConfig, seed: int, fold_idx: int):

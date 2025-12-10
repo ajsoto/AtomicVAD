@@ -1,108 +1,98 @@
-# 🧠 AtomicVAD: A Tiny Voice Activity Detection Model for Efficient Inference in Intelligent IoT Systems  
+# **AtomicVAD — A Tiny Voice Activity Detection Model for Efficient Inference in Intelligent IoT Systems**
 
-**AtomicVAD** is an ultra-lightweight, end-to-end Voice Activity Detection (VAD) model designed for **resource-constrained microcontrollers** and **IoT systems**.  
-With only **0.3k trainable parameters**, it achieves **state-of-the-art accuracy** while maintaining a minimal computational footprint, making it ideal for **TinyML** and **edge AI** applications.  
+AtomicVAD is a lightweight, high-accuracy **Voice Activity Detection (VAD)** system designed for real-time speech detection under noisy and multi-domain conditions. It introduces the **GGCU (Generalized Growing Cosine Unit)** activation and supports both **segment-level** and **streaming-compatible sliding-window inference**. With only 0.3k trainable parameters, it achieves state-of-the-art accuracy while maintaining a minimal computational footprint, making it ideal for TinyML and edge AI applications.
 
 This repository provides the code, pre-trained models, and scripts used in the paper:  
 📘 *"AtomicVAD: A Tiny Voice Activity Detection Model for Efficient Inference in Intelligent IoT Systems."*
 
 ---
 
-## 🚀 Key Features
+## 🚀 Features
 
-- ⚡ **Ultra-Efficient Architecture** — ~300 parameters, <75 kB Flash, <65 kB SRAM.  
-- 🎧 **High Accuracy** — AUROC = 0.903, F2 = 0.891 on AVA-Speech dataset.  
-- 🌍 **Real-World Ready** — Validated on **LoRaWAN IoT** nodes and **Arduino Nano 33 BLE Sense**.  
-- 🔁 **Oscillatory Activation Function (GGCU)** — Enhances robustness to noise and improves gradient flow.  
-- 🧪 **Fully Reproducible Pipelines** — Includes training, inference, and deployment scripts.  
+### **Model Architecture**
+
+* GGCU activation for improved gradient flow
+* Lightweight convolutional blocks with depthwise separable convolutions
+* Skip connections between core blocks
+* Integrated SpecAugment and SpecCutout
+
+### **Training Pipeline**
+
+* 10-fold with different seeds
+* Mixed-precision training
+* Cosine Decay with Restarts scheduling
+* Binary focal loss with class balancing
+* Full reproducibility utilities
+
+### **Evaluation**
+
+* Two protocols:
+
+  * **SPI** — Simple-Pass inference
+  * **SWI** — Sliding-Window inference
+* AUROC, F1, F2, TPR@FPR metrics
+* Batch evaluation support
+
+### **Datasets Supported**
+
+* AVA-Speech
+* Google Speech Commands
+* FreeSound
+* LibriSpeech
+* MUSAN
+* VoxCeleb
+* MLS (Multilingual LibriSpeech)
+* Speech Activity Detection Dataset (Kaggle)
 
 ---
 
-## 📂 Repository Structure
-
-```
-AtomicVAD/
-│
-├── models/                # Trained model files
-├── training/              # Training scripts
-├── evaluation/            # SWI & SPI evaluation protocols for AVA-Speech
-├── notebooks/             # Jupyter notebooks for experimentation and visualization
-├── requirements.txt       # Python dependencies
-├── LICENSE
-└── README.md
-```
-
----
-
-## 🧩 Installation
-
-Clone the repository and install dependencies:
+## 📦 Installation
 
 ```bash
-git clone https://github.com/<your-username>/AtomicVAD.git
+git clone https://github.com/yourusername/AtomicVAD.git
 cd AtomicVAD
 pip install -r requirements.txt
 ```
 
+Full installation steps → **docs/GETTING_STARTED.md**
+
 ---
 
-## 🎓 Usage
+## 📚 Documentation
 
-### 1️⃣ Training
+| Topic             | File                        |
+| ----------------- | --------------------------- |
+| Getting Started   | `docs/GETTING_STARTED.md`   |
+| Data Preparation  | `docs/DATA_PREPARATION.md`  |
+| Training          | `docs/TRAINING.md`          |
+| Evaluation        | `docs/EVALUATION.md`        |
+| Project Structure | `docs/PROJECT_STRUCTURE.md` |
 
-Train AtomicVAD using the Speech Commands + FreeSound (SCF) dataset:
+---
+
+## 🧠 Quick Example: Evaluate a Model
 
 ```bash
-python AtomicVAD/training/train.py
-```
-
-For more information go to training folder.
-
-### 2️⃣ Evaluation
-
-Evaluate performance using the AVA-Speech dataset with the Sliding-Window Inference (SWI) or Simple-Pass Inference method:
-
-```bash
-
-```
-
-### 3️⃣ Quantization for Microcontrollers and Deployment to Arduino Nano 33 BLE Sense
-
-Convert and quantize the trained model to INT8 for deployment using [EdgeImpulse]([url](https://edgeimpulse.com/)) tool.
+python evaluation/evaluate_swi.py \
+    --model_path models/atomicvad_best.keras \
+    --manifest_path manifest/ava_test_manifest.json \
+    --output_csv results/swi_ava.csv \
+    --overlap 0.875
 ```
 
 ---
 
-## 🧠 Model Overview
+## 📈 Expected Performance
 
-AtomicVAD is built around the **OscilloCore** module, combining depthwise separable convolutions with the **Generalized Growing Cosine Unit (GGCU)** activation.  
-This oscillatory activation captures the periodic nature of speech, allowing shallower networks to maintain high accuracy while minimizing parameters.
-
-| Metric | Value |
-|--------|-------|
-| Trainable Parameters | ~0.3 k |
-| AUROC (AVA-Speech, SWI) | 0.903 |
-| F2-Score | 0.891 |
-| Flash Memory | 74 kB |
-| RAM Usage | 65 kB |
-| Inference Latency | 26 ms (Cortex-M7, INT8) |
+| Dataset     | Protocol | AUROC | F1    | F2    |
+| ----------- | -------- | ----- | ----- | ----- |
+| AVA-Speech  | SWI      | 0.XX+ | 0.XX+ | 0.XX+ |
+| LibriSpeech | SWI      | 0.XX+ | 0.XX+ | 0.XX+ |
+| MUSAN       | SWI      | 0.XX+ | 0.XX+ | 0.XX+ |
 
 ---
 
-## 🌐 Real-World Validation
-
-AtomicVAD was successfully deployed in a **LoRaWAN IoT network**, demonstrating that on-device VAD reduces transmission latency from **minutes to milliseconds**, enabling efficient edge-based audio intelligence for:
-
-- 🔊 Smart Home Control  
-- 🌋 Disaster-Response Sensor Networks  
-- 🏥 Remote Health Monitoring  
-- 🏭 Industrial IoT Applications  
-
----
-
-## 📊 Citation
-
-If you use this repository, please cite:
+## 📝 Citation
 
 ```bibtex
 @article{SotoVergel2026,
@@ -119,25 +109,4 @@ If you use this repository, please cite:
   pages = {101822}
 }
 ```
-
 ---
-
-## 🤝 Contributing
-
-Contributions, issues, and pull requests are welcome!  
-If you improve the model, add new datasets, or optimize inference for other microcontrollers, please open a PR.
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
-
----
-
-## 💬 Contact
-
-For research collaboration or technical questions:  
-📧 **Angelo Joseph Soto-Vergel**  
-🌐 [LinkedIn](https://linkedin.com/in/angelo-joseph-soto-vergel-b851b5a3)  
-🔗 [Google Scholar](https://scholar.google.com/citations?user=bSuhGuUAAAAJ)  

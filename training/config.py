@@ -5,13 +5,17 @@ Training configuration for AtomicVAD model.
 import os
 from dataclasses import dataclass
 
+# 1. Get the absolute directory path of the current script file
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+target_dir_manifest = os.path.join(script_dir, '..', 'manifest')
 
 @dataclass
 class TrainingConfig:
     """Configuration class for training parameters."""
     
     # Data paths
-    data_dir: str = 'data/manifest'
+    data_dir: str = target_dir_manifest
     speech_train_json: str = os.path.join(data_dir, 'balanced_speech_training_manifest.json')
     background_train_json: str = os.path.join(data_dir, 'balanced_background_training_manifest.json')
     speech_val_json: str = os.path.join(data_dir, 'balanced_speech_validation_manifest.json')
